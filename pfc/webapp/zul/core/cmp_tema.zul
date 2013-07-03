@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<window  id="theme_sub" title="Actualizar Tema do ${theme.fullName}">
+	<zscript src="cmp_tema.zs"/>
+	<!-- Componente para editar um tema -->
+	<zscript><![CDATA[
+		title = theme.titulo;
+		description = theme.description; 
+		nota = theme.nota; 
+		supervisor = theme.supervisorName;
+		situation = theme.situation;
+	]]></zscript>
+ <vbox>
+  <label id="successMsg" style="color:blue"/>
+   <groupbox mold="3d">
+	   <caption label="Editar Tema"/>    
+		<grid oddRowSclass="none">
+		 <rows id="theme_information"> 
+		  <row> Título:       <textbox id="title_txt"       value="${title}"      />   </row>
+		  <row> Desccrição:   <textbox id="description_txt" value="${description}"/>   </row> 
+		  <row> Nota:         <intbox  id="nota_txt"        value="${nota}"       />   </row>  
+		  <row> Supervisor: 
+	       <combobox id="combo_sup">
+			<attribute name="onCreate">
+		     <![CDATA[
+			   int firstItem = 0;
+			   self.appendChild(new Comboitem(supervisor));
+			   for (docente : docentes)
+			   {
+				  if(!supervisor.equalsIgnoreCase(docente.fullName))
+				  {
+				     self.appendChild(new Comboitem(docente.fullName));
+				     
+				  }
+			   } 
+			   
+			   self.setSelectedIndex(firstItem);
+				 
+             ]]></attribute>
+			   
+            <attribute name="onChanging">
+		     <![CDATA[
+			   self.getChildren().clear(); //remove all children
+				
+			   if(!supervisor.trim().equalsIgnoreCase("") && supervisor != null) self.appendChild(new Comboitem(supervisor));			
+               for (docente : docentes)
+			   {
+				  if(!supervisor.equalsIgnoreCase(docente.fullName))
+				  {
+				     self.appendChild(new Comboitem(docente.fullName));
+				  }
+			   } 
+             ]]>
+			 </attribute>
+			   
+			 <attribute name="onChange">
+		     <![CDATA[
+				 neItem = event.getValue();
+				 self.getChildren().clear(); //remove all children
+			     self.appendChild(new Comboitem(neItem));		
+               for (docente : docentes)
+			   {				  
+				  self.appendChild(new Comboitem(docente.fullName));
+			   } 
+				 
+             ]]>
+			 </attribute>
+            </combobox>  
+		  </row> 
+		  <row> Situação:      
+			  <listbox id="situation_list" mold="select" >
+				  <attribute name="onCreate">					 
+					  onDBsituation = situation;					  
+					  for(situation_item : self.items)
+					  {
+					     if(situation_item.value.equals(onDBsituation))
+					     {
+					         self.setSelectedItem(situation_item);
+					     }
+					  }
+				  </attribute>	
+				  <listitem label="Análise" value="Análise"/>
+	              <listitem label="Parcialmente Reprovado" value="PR"/>
+				  <listitem label="Reprovado" value="Reprovado"/>
+				  <listitem label="Aprovado" value="Aprovado"/>
+             </listbox>
+		  </row> 			 
+		 </rows>        
+		</grid>	 
+ </groupbox>	
+	 <hbox>
+	  <button label="Actualizar" onClick="save()"/>
+	  <button label="Cancelar" onClick="teste()" />
+	</hbox>	
+	</vbox>	
+</window>

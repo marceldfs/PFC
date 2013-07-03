@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window xmlns:h="http://www.w3.org/1999/xhtml" >
+    <caption>   
+	  <label value="Página Inicial"/>
+	  <separator/><separator/>
+    </caption>
+	<zscript><![CDATA[
+		userLoggedIn = sessionScope.get(Constant.USER_LOGGED_IN);
+	    name = userLoggedIn.fullName;
+	]]></zscript>
+	
+	<label style="font-family:Arial; font-style: italic; font-size: 14pt" value="Caro "></label>
+	<label style="font-family:Arial;  font-size: 16pt; color: blue" value="${name}"></label>
+	<label  style="font-family:Arial; font-style: italic; font-size: 14pt" value=", seja bem vindo ao sistema de gestão de PFC do ISUTC"/>
+</window>

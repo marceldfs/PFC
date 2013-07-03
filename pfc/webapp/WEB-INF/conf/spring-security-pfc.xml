@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans	
+		                   http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/security 
+		                   http://www.springframework.org/schema/security/spring-security-2.0.4.xsd
+		                   http://www.springframework.org/schema/aop 
+	                       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+	
+	<!-- Spring-Security: role-based URL protection " Secure pages "-->
+ 	<security:http auto-config="true">
+ 	 <security:intercept-url pattern="/zul/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>  
+	 <security:intercept-url pattern="/zul/core/**" access="ROLE_USER"/>
+	 <security:intercept-url pattern="/zul/base/**" access="ROLE_USER"/>
+	 <security:intercept-url pattern="/zul/admin/**" access="ROLE_SUPERVISOR"/>
+ 	 <security:intercept-url pattern="/zul/login_error.zul" filters="none"/>	 
+  	 <security:form-login login-page="/zul/login.zul" default-target-url="/zul/main.zul" authentication-failure-url="/zul/login_error.zul"/> 
+     <security:logout logout-success-url="/zul/main.zul"/>
+ 	</security:http>
+	
+	 
+
+ <bean id="ldapAuthProvider" class="org.springframework.security.providers.ldap.LdapAuthenticationProvider">
+  <security:custom-authentication-provider /> 
+ 	 <constructor-arg>
+      <bean class="org.springframework.security.providers.ldap.authenticator.BindAuthenticator">
+       <constructor-arg ref="ldap"/>
+       <property name="userDnPatterns">
+        <list><value>uid={0},ou=Users,dc=isutc,dc=transcom,dc=co,dc=mz</value></list>
+       </property>
+      </bean>
+  	 </constructor-arg>
+  	 <constructor-arg>
+      <bean class="org.springframework.security.ldap.populator.DefaultLdapAuthoritiesPopulator">
+       <constructor-arg ref="ldap"/>
+       <constructor-arg value="ou=Groups,dc=isutc,dc=transcom,dc=co,dc=mz"/>
+       <property name="groupRoleAttribute" value="cn"/>
+       <property name="groupSearchFilter" value="memberUid={1}"/>	
+      </bean>
+  	 </constructor-arg>
+    <property name="userDetailsContextMapper">
+   <bean class="isutc.pfc.security.PfcUserDetailsContextMapper" parent="dbSpringManager">
+	  <property name="securityUtil" ref="securityUtil"/>  
+   </bean> 	   
+  </property>
+ </bean>
+	
+	<!-- Spring-Security: Users and roles-->
+      <security:authentication-manager alias="authenticationManager"/>
+       <security:authentication-provider>
+       <!-- <security:password-encoder hash="md5" /> -->
+        <security:user-service>
+         <security:user name="stelio" password="12345" authorities="ROLE_SUPERVISOR, ROLE_ESTUDANTE, ROLE_COORDENADOR" />
+         <security:user name="zacarias" password="12345" authorities="ROLE_ESTUDANTE" />
+         <security:user name="kubillas" password="12345" authorities="ROLE_SUPERVISOR" />
+         <security:user name="mufas" password="12345" authorities="ROLE_COORDENADOR" />
+        </security:user-service>
+       </security:authentication-provider>
+	
+	<security:ldap-server id="ldap" url="ldap://localhost:389"/>
+	    
+</beans>

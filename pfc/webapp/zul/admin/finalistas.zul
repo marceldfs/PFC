@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <caption>   
+	  <label value="Estudantes finalistas"/>
+    </caption>
+	
+	<zscript><![CDATA[
+		
+	]]></zscript>
+	
+	<label value="Funcionalidade para a próxima verão: Ver a situação de cada finalista" style="color: green; font-size:20pt;"/>
+
+</window>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tomcatProjectProperties>
+    <rootDir>/webapp</rootDir>
+    <exportSource>false</exportSource>
+    <reloadable>true</reloadable>
+    <redirectLogger>false</redirectLogger>
+    <updateXml>true</updateXml>
+    <warLocation>/media/Win2K8Server/SHARE/PFC/CAP4/pfc</warLocation>
+    <extraInfo></extraInfo>
+    <webPath>pfc</webPath>
+</tomcatProjectProperties>

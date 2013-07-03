@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <caption>   
+	  <label value="Agenda de defesas"/>
+	  <separator/><separator/>
+    </caption>
+	
+	<zscript><![CDATA[
+	]]></zscript>
+     <label value="Funcionalidade para a próxima verão: Agendar e ver as próximas defesas" style="color: green; font-size:20pt;"/>
+</window>

@@ -1,0 +1,23 @@
+<zk>
+	<!--reload da mesma pagina se a sessao acabou -->
+	 <device-config>
+	  <device-type>ajax</device-type>  
+	  <timeout-uri>/zul/login.zul</timeout-uri>
+	 </device-config>
+	
+	 <system-config>
+		  <max-upload-size>-1</max-upload-size> <!-- desactivar limite no tamanho de PDFs uploadados -->
+	 </system-config>
+	
+	<!-- enable use of  multiple threads -->
+ <listener>
+  <description>ThreadLocal Synchronization Listener</description>
+  <listener-class>org.zkoss.zkplus.util.ThreadLocalListener</listener-class>
+ </listener>
+
+ <preference>
+  <name>ThreadLocal</name>
+  <value>org.springframework.security.coRzkntext.ThreadLocalSecurityContextHolderStrategy=contextHolder</value>
+ </preference>
+	
+</zk>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<window>
+ <zscript src="login.zs"/>
+ <separator/><separator/>
+  <div align="center">
+   <window border="normal" width="950px" style="background-color:blue" xmlns:h="http://www.w3.org/1999/xhtml">			
+	<hbox>
+	 <image width="98px" height="43px" src="/image/Logo-ISUTC.jpg"/>
+	 <label style="font-family:Arial; font-style: italic; font-size: 24pt">
+		 Sistema de Gestão de Projectos Final de Curso
+	 </label>
+	</hbox>
+	<separator/><separator/><separator/>
+	<div align="center">				
+	 <vbox id="_body" >					
+	  <h:center>
+       <label style="color:red;font-size:25px;font-weight: bold;" value="Acesso ao Sistema!!!"/>
+      </h:center>
+      <separator/>
+      <h:center> 
+       A combinação <h:b>Utilizador</h:b> e <h:b>Senha</h:b> é inválida!   
+       <separator/><separator/><separator/>   
+       Clique no botão <h:b>Voltar</h:b> para aceder ao sistema!
+	   <separator/><separator/>
+	   <button style="font-weight: bold" label="Voltar" width="125px" onClick="back()"/>
+	  </h:center> 				
+	 </vbox>
+	 <separator/><separator/><separator/><separator/><separator/><separator/><separator/><separator/><separator/>
+	 <window border="normal"> Protótipo do sistema de Gestao de PFC's </window>
+	</div>
+	<separator/>
+	<separator/>
+	<separator/> Desenvolvido por: Stélio Zacarias </window>
+   </div>
+</window>

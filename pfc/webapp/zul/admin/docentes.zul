@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+	<zscript src="docentes.zs"/>
+	<zscript><![CDATA[
+		
+	ListModel teachers = new SimpleListModel(docentes);
+	ListitemRenderer themeRenderer = new ThemeRenderer();
+	
+	]]></zscript>
+ <vbox>	 
+   <listbox id="docenteList" width="100%" height="100%" mold="paging" rows="4">
+		  <attribute name="model" >${teachers}</attribute>
+      <listhead>
+		<listheader label="" width="5%"/>
+        <listheader label="Nome"/>
+		<listheader label="Email"/>
+      </listhead>
+    </listbox>
+			 
+	<!-- Activamos o ListBox para mostrar os Docentes dinamicamente -->
+	 <zscript> 
+		
+		docenteList.setItemRenderer
+		(
+		  new ListitemRenderer() 
+		  {
+			public void render(Listitem listItem, Object data) throws Exception 
+			{ 
+				final User docente = (User)data;
+				listItem.setValue(docente);
+		 
+				count++;
+				new Listcell(""+count).setParent(listItem);
+				/*
+				new Listcell(docente.getFullName()).setParent(listItem);
+				new Listcell(docente.getInstituition()).setParent(listItem);
+				new Listcell(docente.getTelefone()).setParent(listItem);
+				new Listcell(""+docente.getEmail()).setParent(listItem);
+				*/
+			}   
+		  }
+		);
+	 </zscript>
+  <hbox> 
+   <button id="updateBtn" label="Listar" onClick="listar()"/>
+  </hbox>
+ </vbox>	
+</zk>

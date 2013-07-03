@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	
+	<bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/pfc?autoReconnect=true"/>
+		<property name="username" value="stelio"/>
+		<property name="password" value="isutc"/>
+	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="datasource"/>
+	</bean>	
+	
+	<bean id="dbSpringManager" abstract="true" class="isutc.pfc.base.DbSpringManager">
+		<property name="jdbc" ref="jdbcTemplate"/>
+		<property name="ldap" ref="ldapTemplate"/>
+	</bean>
+																																																																																 
+  	<bean id="ldapContextSource" class="org.springframework.ldap.core.support.LdapContextSource">
+		<property name="url" value="ldap://localhost:389" />
+		<property name="base" value="dc=isutc,dc=transcom,dc=co,dc=mz" />
+		<property name="anonymousReadOnly" value="true"/>
+	</bean>
+	
+	<bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">	  
+		<constructor-arg ref="ldapContextSource" /> 
+	</bean>
+	
+	<!-- 2.1 configurar os Managers -->
+ 	<bean id="userManager" class="isutc.pfc.manager.UserManager" parent="dbSpringManager"/>	
+	<bean id="classManager" class="isutc.pfc.manager.ClassManager" parent="dbSpringManager"/>		
+	<bean id="studantManager" class="isutc.pfc.manager.StudantManager" parent="dbSpringManager"/>		
+	<bean id="temaManager" class="isutc.pfc.manager.TemaManager" parent="dbSpringManager"/>
+	<bean id="pfcManager" class="isutc.pfc.manager.PfcManager" parent="dbSpringManager">
+		<property name="temaManager" ref="temaManager"/>
+	</bean>	
+	
+	<!--3.1 Beans Usado na Seguranca -->
+	<bean id="securityUtil" class="isutc.pfc.security.SecurityUtil" parent="dbSpringManager"/>
+	
+	<!-- Configuração de Email -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+  		<property name="host" value="smtp.gmail.com"/>
+		<property name="port" value="587"/>
+		<property name="username" value="stelio.zacarias"/>
+		<property name="password" value="shotokan"/>		
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- Template da mensagem -->
+	<bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
+	  <property name="from" value="stelio.zacarias@isutc.transcom.co.mz"/>
+	  <property name="to" value="stelio.zacarias@isutc.transcom.co.mz"/>
+	  <property name="subject" value="PFC Actualizado"/>
+	  <property name="text" value="Teste de envio de email, não responda, obrigado!"/>
+	</bean>
+	
+	<bean id="emailManager" class="isutc.pfc.manager.RealEmailManager">
+		<property name="mailSender" ref="mailSender"/>
+		<property name="templateMessage" ref="templateMessage"/>
+	</bean>
+		
+</beans>

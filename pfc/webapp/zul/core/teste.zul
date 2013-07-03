@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<window>
+ 
+  	<zscript><![CDATA[
+	  
+	  teste(){
+	   // user = userManager.loadUserByUsername("ancha.martins");
+	 // alert(user);
+	   // alert("user ="+ userManager.getDocentes());
+	// alert("user ="+ userManager.getDocentsDetails());
+	//  final2 = userManager.getDocentsDetails();
+	  alert(userManager.getFinalistasDetails());
+	  
+	  }
+
+	  
+	]]></zscript>
+
+ <div>
+  <toolbarbutton label="Pauta em PDF" onClick="teste()"/>
+
+ </div>
+</window>

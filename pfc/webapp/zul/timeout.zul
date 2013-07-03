@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window xmlns:h="http://www.w3.org/1999/xhtml" >
+	 <zscript> <![CDATA[ 
+    back()
+	{
+	   alert("TODO: Voltar ao home");
+	}	  	   
+   ]]></zscript>  
+    <caption>   
+	  <label value="Sessão esgotada"/>
+	  <separator/><separator/>
+    </caption>
+	<vbox>
+		<label style="font-family:Arial; font-style: italic; font-color: red; font-size: 16pt" value="Muito tempo sem uso, terminou a sessão"/>
+	    <toolbarbutton label="Voltar" onClick="back()"/>
+	</vbox>
+</window>

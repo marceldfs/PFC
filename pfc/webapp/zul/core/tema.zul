@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window onCreate="loadTema()">
+	<zscript src="tema.zs"/>
+    <caption>   
+	  <label value="Temas Submetidos"/>
+	  <separator/><separator/>
+    </caption>
+	
+	<zscript><![CDATA[
+		ListModel themes = new SimpleListModel(temas);
+		ListitemRenderer themeRenderer = new ThemeRenderer();
+	]]></zscript>
+	
+	<vbox>
+            <toolbarbutton label="Ver em PDF" onClick="showReport()" />
+	</vbox>	
+	
+	<listbox id="themelist" width="100%" height="100%" mold="paging" rows="4">
+	  <attribute name="model" >${themes}</attribute>
+	  <!--<attribute name="itemRenderer" >themeRenderer</attribute>-->
+      <listhead>
+		<listheader label="" width="3%"/>
+        <listheader label="Titulo" width="20%"/>
+		<listheader label="Situação" width="10%"/>
+        <listheader label="Nota" width="5%"/>
+		<listheader label="Início" width="9%"/>
+		<listheader label="Fim" width="9%"/>
+		<listheader label="Estudante" width="14%"/>
+		<listheader label="Supervisor" width="10%"/>
+		<listheader label="Descrição" width="20%"/>
+      </listhead>
+    </listbox>
+	
+	<!-- Activamos o ListBox para mostrar os Temas dinamicamente -->
+	 <zscript> 
+		//themelist.itemRenderer = themeRenderer; //TODO: O renderer geral não esta a funcionar, evitar 
+		
+		themelist.setItemRenderer(new ListitemRenderer() 
+		{
+			public void render(Listitem listItem, Object data) throws Exception 
+			{ 
+				final Tema tema = (Tema)data;
+				listItem.setValue(tema);
+		 
+				count++;
+				new Listcell(""+count).setParent(listItem); //contador
+				new Listcell(tema.getTitulo()).setParent(listItem); //titulo
+				new Listcell(""+tema.getSituation()).setParent(listItem); //Situação
+				new Listcell(""+tema.getNota()).setParent(listItem); //nota
+				new Listcell(tema.getData_inicio().toString()).setParent(listItem); //inicio
+				new Listcell(tema.getData_fim().toString()).setParent(listItem); //fim
+		        new Listcell(tema.getFullName()).setParent(listItem); //estudante
+				new Listcell(tema.getSupervisorName()).setParent(listItem); //supervisor
+				new Listcell(tema.getDescription()).setParent(listItem); //desc
+			}   
+		});
+	 </zscript>
+	
+	  <groupbox>	
+		 <caption label="Critério de Pesquisa"/>	   
+		  <hbox>
+			<hbox>
+				TEMA: <textbox id="searchThemeCriteria" onChanging="dinamicSearch()"/>  
+			</hbox>
+				
+		   <hbox>
+              <radiogroup id="searchCriterial">
+                 <radio value="title" label="Título" Checked="true"/>
+				 <radio value="description" label="Descrição"/>
+				 <radio value="situation" label="Situação"/>
+				 <radio value="supervisor" label="supervisor"/>
+              </radiogroup>
+              <button id="searchBtn" label="Procurar" onClick="listByCriteria(searchCriterial.selectedItem.value,searchThemeCriteria.value.trim())"/>  
+          </hbox>
+		</hbox>
+	 </groupbox>
+	<hbox>
+	  <button label="Apagar Tema" onClick="deleteTheme()" if="${isTeacher}"/>
+	  <button label="Actualizar Tema" onClick="updateTheme()" if="${isTeacher}"/>
+	</hbox>	
+</window>

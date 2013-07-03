@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window onCreate="loadPfc()">
+	<zscript src="pfc.zs"/>	
+	<zscript src="/WEB-INF/zscript/reports.zs"/>
+    <caption>   
+	  <label value="PFC's Submetidos"/>
+	  <separator/><separator/>
+    </caption>
+	
+	<zscript><![CDATA[
+		ListModel pfcs = new SimpleListModel(_pfcs);
+		//ListitemRenderer pfcRenderer = new ThemeRenderer();
+	]]></zscript>
+	
+	<vbox>
+	<!--<borderlayout height="100%">
+        <north maxsize="24" size="24" border="0">-->
+            <toolbarbutton label="Ver em PDF" onClick="showReport()" />
+       <!-- </north>
+        <center border="none" flex="true">
+            <jasperreport id="report" />-->
+        <!--</center>
+    </borderlayout>
+	<iframe id="report_frame" visible="false"/> -->
+	</vbox>	
+		
+	<listbox id="pfcList" width="100%" height="100%" mold="paging" rows="4">
+	  <attribute name="model" >${pfcs}</attribute>
+	  <attribute name="onSelect">
+		     <![CDATA[
+			   /*
+				 pfc = self.selectedItem.value;				 
+			     doc = pfc.text;
+			     format = "application/pdf";					 
+			     Filedownload.save(doc, format, pfc.getFullName()+"_pfc.pdf");
+			   */
+             ]]>
+	  </attribute>
+      <listhead>
+		<listheader label="" width="3%"/>
+        <listheader label="Titulo" width="20%"/>
+		<listheader label="Situação" width="10%"/>
+        <listheader label="Nota" width="5%"/>
+		<listheader label="Início" width="9%"/>
+		<listheader label="Fim" width="9%"/>
+		<listheader label="Estudante" width="14%"/>
+		<listheader label="Supervisor" width="10%"/>
+		<listheader label="Descrição" width="20%"/>
+		<listheader label="Oponente" width="20%"/>
+		<listheader label="Presidente" width="20%"/>
+		  
+      </listhead>
+    </listbox>
+	
+	<!-- Activamos o ListBox para mostrar os PFC's dinamicamente -->
+	 <zscript> 
+		pfcList.setItemRenderer
+		( 
+		  new ListitemRenderer() 
+		  {
+			public void render(Listitem listItem, Object data) throws Exception
+			{ 
+				 final Pfc pfc = (Pfc)data;
+				 listItem.setValue(pfc);
+				 count++;
+				 new Listcell(""+count).setParent(listItem);
+				 new Listcell(pfc.getTitulo()).setParent(listItem);
+				 new Listcell(pfc.getSituation()).setParent(listItem); 
+		         new Listcell(""+pfc.getNota()).setParent(listItem); 
+		         new Listcell(pfc.getData_inicio().toString()).setParent(listItem); 
+		         new Listcell(pfc.getData_fim().toString()).setParent(listItem); 
+		         new Listcell(pfc.getFullName()).setParent(listItem); 
+		         new Listcell(pfc.getSupervisorName()).setParent(listItem); 
+		         new Listcell(pfc.getDescription()).setParent(listItem);
+				 new Listcell(pfc.getOponente()).setParent(listItem); 
+		         new Listcell(pfc.getPresidente()).setParent(listItem);			        
+			}   
+		  }
+		 );
+	 </zscript>
+	
+	  <groupbox>	
+		 <caption label="Critério de Pesquisa"/>	   
+		  <hbox>
+			<hbox>
+				PFC: <textbox id="searchThemeCriteria" onChanging="dinamicSearch()"/>  
+			</hbox>
+				
+		   <hbox>
+              <radiogroup id="searchCriterial">
+                 <radio value="title" label="Título" Checked="true"/>
+				 <radio value="description" label="Descrição"/>
+				 <radio value="situation" label="Estado"/>
+				 <radio value="supervisor" label="supervisor"/>
+				 <radio value="supervisor" label="Oponente"/>
+              </radiogroup>
+              <button id="searchBtn" label="Procurar" onClick="listByCriteria(searchCriterial.selectedItem.value,searchThemeCriteria.value.trim())"/>  
+          </hbox>
+		</hbox>
+	 </groupbox>
+	<hbox>
+	  <button label="Apagar PFC" onClick="deletePfc()" if="${isTeacher}"/>
+	  <button label="Actualizar PFC" onClick="updatePfc()" if="${isTeacher}"/>
+	  <button label="Ver PFC" onClick="openPFC()"/>
+	</hbox>	
+</window>

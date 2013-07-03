@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<window>
+ <zscript src="login.zs"/>
+ <separator/><separator/>
+ <div align="center">
+  <window border="normal" width="950px" style="background-color:blue">
+   <hbox>
+    <image width="98px" height="43px" src="/image/Logo-ISUTC.jpg"/>
+	<label style="font-family:Arial; font-style: italic; font-size: 24pt">
+		Sistema de Gestão de Projectos Final de Curso
+    </label>
+   </hbox>
+   <separator/><separator/><separator/>
+   <div align="center">				
+	<vbox id="_body" >
+	 <html style="color:red" if="${not empty param.login_error}">
+      <![CDATA[
+        Your login attempt was not successful, try again.<br/><br/>
+        Reason: ${SPRING_SECURITY_LAST_EXCEPTION.message}
+       ]]>
+    </html> 
+    <groupbox width="50%" >
+     <caption>Login</caption>
+     <h:form id="f" name="f" action="j_spring_security_check" method="POST" xmlns:h="native">
+      <grid >
+       <rows>
+        <row>User: <textbox id="u" name="j_username"/></row>
+        <row>Password: <textbox id="p" type="password" name="j_password"/></row>
+       <!-- <row><checkbox id="r" name="j_spring_security_remember_me"/>Guardar a password por 2 semanas</row> -->
+        <row>
+         <hbox>
+          <h:input type="submit" value="Entrar"/>
+          <h:input type="reset" value="Limpar os Dados "/>
+         </hbox>
+        </row>
+       </rows>
+      </grid>
+     </h:form>
+    </groupbox>
+   </vbox>				
+   <separator/><separator/><separator/><separator/><separator/><separator/><separator/><separator/><separator/>
+   <window border="normal"> Protótipo do sistema de Gestao de PFC's </window>
+  </div>
+  <separator/>
+  <separator/>
+  <separator/> Desenvolvido por: Stélio Zacarias </window>
+ </div>
+</window>

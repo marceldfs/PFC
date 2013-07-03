@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<?component name="theme" macro-uri="/zul/core/cmp_tema.zul"?>
+
+<window>
+	<zscript src="main.zs"/>
+	<separator/><separator/>
+		<div align="center">
+		<window border="normal" width="950px" style="background-color:blue">
+			
+			<hbox>
+				<image width="98px" height="43px" src="/image/Logo-ISUTC.jpg"/>
+				<label style="font-family:Arial; font-style: italic; font-size: 24pt">
+					 Sistema de Gestão de Projectos Final de Curso
+				</label>
+			</hbox>
+			<separator/><separator/><separator/>
+			<div align="left">
+				<menubar id="menubar" orient="horizontal">
+					<menu label="Tema">
+						<menupopup>
+							<menu label="Listar">
+								<menupopup>
+									<menuitem label="TODOS" onClick='sessionScope.put("dep","ALL");showPage("core/tema")'/>
+									<!--<menuitem label="LEIT" onClick='sessionScope.put("dep","LEIT");showPage("core/tema")'/>
+									<menuitem label="LECT" onClick='sessionScope.put("dep","LECT");showPage("core/tema")'/>
+									<menuitem label="LEMT" onClick='sessionScope.put("dep","LEMT");showPage("core/tema")'/>
+									<menuitem label="LGF" onClick='sessionScope.put("dep","LGF");showPage("core/tema")'/>-->
+								</menupopup>
+							</menu>
+						  <menuitem label="Submeter" onClick='showPage("core/tema_submit")' if="${isStudant}"/>							
+						</menupopup>
+					</menu>
+					<menu label="PFC">
+						<menupopup>
+							<menu label="Listar">
+								<menupopup>
+									<menuitem label="TODOS" onClick='sessionScope.put("dep","ALL");showPage("core/pfc")'/>
+									<!--<menuitem label="LEIT" onClick='sessionScope.put("dep","LEIT");showPage("core/pfc")'/>
+									<menuitem label="LECT" onClick='sessionScope.put("dep","LECT");showPage("core/pfc")'/>
+									<menuitem label="LEMT" onClick='sessionScope.put("dep","LEMT");showPage("core/pfc")'/>
+									<menuitem label="LGF" onClick='sessionScope.put("dep","LGF");showPage("core/pfc")'/>-->
+								</menupopup>
+							</menu>
+							<menuitem label="Submeter" onClick='showPage("core/pfc_submit")' if="${isStudant}"/>
+						</menupopup>
+					</menu>
+					
+					<menuitem label="Defesas" onClick='showPage("core/defesas")'/> <!-- Mostrar as datas das defesas por efectuar -->
+					
+					<menu label="Administração" if="${isTeacher}">
+						<menupopup>
+						<!--	<menuitem label="Cadastros" onClick='showPage("admin/cadastrar")'/> -->
+							<!--<menuitem label="Docentes" onClick='showPage("admin/docentes")'/> -->
+							<menuitem label="Finalistas" onClick='showPage("admin/finalistas")'/>
+						<!--	<menuitem label="Teste Cases(To Delete)" onClick='showPage("core/teste")'/> -->
+						</menupopup>
+					</menu>
+					
+					<menuitem label="Sair" onClick="logout()"/>
+				</menubar>
+				
+				<vbox id="_body" >
+					<include src="/zul/base/home.zul"/>					
+					<zscript>
+					  desktopScope.put("body",self);					  
+					</zscript>
+				</vbox>
+				
+				<separator/><separator/>
+				<window border="normal">
+					 <hbox>
+						 <vbox>
+						   <label value=" Protótipo do sistema de Gestao de PFC's" style="font-size:10pt;"/>
+						   <label value="${userLoggedIn.fullName}" style="color: blue; font-size:8pt;"/>
+					     </vbox>
+						 <separator/>
+					   <!--  <button id="logoutBtn"    label="Sair"    onClick="logout()"/> -->
+	                 </hbox>
+				</window>
+			</div>
+			<separator/> 
+			Desenvolvido por: Stélio Zacarias 
+		</window>
+	</div>
+</window>
