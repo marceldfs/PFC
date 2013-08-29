@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<window xmlns:h="http://www.w3.org/1999/xhtml" >
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<window onCreate="load()" xmlns:h="http://www.w3.org/1999/xhtml">
+	<zscript src="/zul/index.zs"/>
     <caption>   
 	  <label value="Página Inicial"/>
 	  <separator/><separator/>
     </caption>
+
 	<zscript><![CDATA[
 		userLoggedIn = sessionScope.get(Constant.USER_LOGGED_IN);
-	    name = userLoggedIn.fullName;
+	    // name = userLoggedIn.fullName;
 	]]></zscript>
 	
 	<label style="font-family:Arial; font-style: italic; font-size: 14pt" value="Caro "></label>
 	<label style="font-family:Arial;  font-size: 16pt; color: blue" value="${name}"></label>
 	<label  style="font-family:Arial; font-style: italic; font-size: 14pt" value=", seja bem vindo ao sistema de gestão de PFC do ISUTC"/>
+	<vbox>
+		PFCs Publicados
+		<listbox id="pfcList" mold="select" >
+			<listitem label=" " selected="true"/>
+			<listitem forEach="${pfcs}" label="${each.temaStudent}" value="${each}"/>
+		</listbox>
+		<button label="Ver PFC" onClick="showPfc(pfcList)"/>
+	</vbox>
 </window>

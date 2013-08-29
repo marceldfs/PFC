@@ -5,7 +5,7 @@
  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
  
     <description><![CDATA[PFC Applicaton]]></description>
-    <display-name>PFC Manafmant</display-name>
+    <display-name>Gestao de PFC</display-name>
 	
 	<!-- Spring-Secrity-->
 	<filter>
@@ -65,13 +65,14 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value> 
+			/WEB-INF/conf/hibernateContext.xml
 			/WEB-INF/conf/spring-manager-pfc.xml
 			/WEB-INF/conf/spring-security-pfc.xml
 		</param-value>
 	</context-param>
 	
 	<session-config>
-   <session-timeout>30</session-timeout>
+   <session-timeout>60</session-timeout>
   </session-config>
 	
     <welcome-file-list>

@@ -20,6 +20,7 @@ import org.springframework.security.GrantedAuthority;
 import org.springframework.security.GrantedAuthorityImpl;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.userdetails.ldap.LdapUserDetails;
 import org.springframework.security.userdetails.ldap.LdapUserDetailsImpl;
 
 import isutc.pfc.base.DbSpringManager;
@@ -28,32 +29,47 @@ public class SecurityUtil  extends DbSpringManager
 {
 	private String _groupPrefix = "ROLE_";
 	private static Logger logger = Logger.getLogger(SecurityUtil.class);
+	private String secRole;
+	private String gpfcRole;
+	private String studentRole;
 	
+	
+
+	public String getSecRole() {
+		return secRole;
+	}
+
+	public void setSecRole(String secRole) {
+		this.secRole = secRole;
+	}
+
+	public String getGpfcRole() {
+		return gpfcRole;
+	}
+
+	public void setGpfcRole(String gpfcRole) {
+		this.gpfcRole = gpfcRole;
+	}
+
+	public String getStudentRole() {
+		return studentRole;
+	}
+
+	public void setStudentRole(String studentRole) {
+		this.studentRole = studentRole;
+	}
+
 	public org.springframework.security.userdetails.User getUserLoggedIn() throws NamingException
 	{
-		Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if(obj instanceof UserDetails)
+		try 
 		{
-			LdapUserDetailsImpl realUser=(LdapUserDetailsImpl)obj;
-			BasicAttributes attrs=(BasicAttributes)realUser.getAttributes();
-			
-			String user_name = (String)attrs.get("cn").get();          
-	        String fullName = (String)attrs.get("displayName").get();
-	        int user_id = Integer.parseInt((String)attrs.get("uidNumber").get());  //TODO
-	        String classId = attrAsString(attrs, "departmentNumber");
-	        String email = attrAsString(attrs, "mail");
-	        GrantedAuthority [] authorities = realUser.getAuthorities();
-	          
-	        User user = new User(user_name, fullName,user_id, classId, email,authorities);  
-	          
-	       /* GrantedAuthority[]authoritiesLdap={new GrantedAuthorityImpl(getRole(user_id))};
-	  		//user.setAuthorities(authoritiesLdap);
-	        if (classId == null) classId = ""; //TODO: evitar isto, para o caso de isupac3.professor vem null, dificultado os testes
-	        User user = new User(user_name, fullName,user_id, classId, email,authoritiesLdap);
-			*/
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  
 			return user;
 		}
-		return null;
+		catch(Exception e)
+		{
+			return null;
+		}
 	}
 	
 	private String attrAsString(Attributes attrs, String attrName) throws NamingException

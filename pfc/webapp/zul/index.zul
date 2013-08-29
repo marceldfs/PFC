@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+
+<window onCreate="load()">
+	<zscript src="index.zs"/>
+	<separator/><separator/>
+		<div align="center">
+		<window border="normal" style="background-color:blue">
+			
+			<hbox>
+				<image width="98px" height="43px" src="/image/Logo-ISUTC.jpg"/>
+				<label style="font-family:Arial; font-style: italic; font-size: 24pt">
+					 Sistema de Gestão de Projectos Final de Curso
+				</label>
+			</hbox>
+			<separator/><separator/><separator/>
+			<div align="left">
+				<menubar id="menubar" orient="horizontal">
+					<menuitem label="Autenticar" onClick='login()'/>
+				</menubar>
+				
+				PFCs Publicados
+				<listbox id="pfcList" mold="select" >
+					<listitem label=" " selected="true"/>
+					<listitem forEach="${pfcs}" label="${each.temaStudent}" value="${each}"/>
+				</listbox>
+				<button label="Ver PFC" onClick="showPfc(pfcList)"/>
+				
+				<separator/><separator/>
+				<window border="normal">
+					 <hbox>
+						 <vbox>
+						   <label value=" Protótipo do sistema de Gestao de PFC's" style="font-size:10pt;"/>
+						   
+					     </vbox>
+						 <separator/>
+					   <!--  <button id="logoutBtn"    label="Sair"    onClick="logout()"/> -->
+	                 </hbox>
+				</window>
+			</div>
+			<separator/> Desenvolvido por: Stélio Zacarias
+  			<separator/> Melhorado por: Marcel Saraiva 
+		</window>
+	</div>
+</window>

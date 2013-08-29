@@ -5,7 +5,7 @@
     <reloadable>true</reloadable>
     <redirectLogger>false</redirectLogger>
     <updateXml>true</updateXml>
-    <warLocation>/media/Win2K8Server/SHARE/PFC/CAP4/pfc</warLocation>
+    <warLocation>D:\pfc\pfc.war</warLocation>
     <extraInfo></extraInfo>
     <webPath>pfc</webPath>
 </tomcatProjectProperties>

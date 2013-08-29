@@ -4,10 +4,12 @@ import isutc.pfc.security.SecurityHelper;
 // current user logged in
 sessionScope.put(Constant.USER_LOGGED_IN, SecurityHelper.getUser());
 userLoggedIn = sessionScope.get(Constant.USER_LOGGED_IN);
+user=securityUtil.getUserLoggedIn();
 
 //Para facilitar na defesa, mas para a APP real será finalistas e docentes
 isStudant = userLoggedIn.hasRole("ESTUDANTES"); //TODO: Deve ser finalista, ainda não está a aceitar a consulta no LDAP
-isTeacher = userLoggedIn.hasRole("PROFESSORES");//TODO: Deve ser Docente DPG, ainda não está a aceitar a consulta no LDAP
+isSec = userLoggedIn.hasRole("LIMEAA_GESTOR");//TODO: Deve ser Docente DPG, ainda não está a aceitar a consulta no LDAP
+isGpfc = userLoggedIn.hasRole("LIMEAA_CHEFIA");
 
 showPage(tela)
 {

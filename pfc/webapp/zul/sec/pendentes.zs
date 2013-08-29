@@ -1,0 +1,1 @@
+pendentes = pendenteManager.findAll();

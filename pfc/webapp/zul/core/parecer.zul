@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<zscript src="pfc_submit.zs"/>
+    <caption>   
+	  <label value="Estudantes sem parecer"/>
+	  <separator/><separator/>
+    </caption>
+	
+	<listbox id="themelist" width="100%" height="100%" mold="paging" rows="4">
+	  <!--<attribute name="itemRenderer" >themeRenderer</attribute>-->
+      <listhead>
+		<listheader label="" width="3%"/>
+		<listheader label="Estudante" width="15%"/>
+        <listheader label="Tema" width="30%"/>
+		<listheader label="Supervisor" width="8%"/>
+		<listheader label="Data" width="10%"/>
+		<listheader label="" width="34%"/>
+      </listhead>
+		<listitem>
+				<listcell label=""/>
+                <listcell label="Marcel Saraiva"/>
+                <listcell label="Melhoria da aplicação de Gestão de PFC"/>
+                <listcell label="Engº Turay Melo"/>
+				<listcell label="17-02-2013"/>
+				<listcell>
+					<button id="fileBox" upload="true,maxsize=-1,native" onUpload="recordTextPath()" label="Carregar"/>
+					<button label="Submeter" />
+				</listcell>
+         </listitem>
+    </listbox>
+</window>

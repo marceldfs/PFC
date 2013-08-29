@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <caption>   
+	  <label value="Pendentes da Secretária"/>
+	  <separator/><separator/>
+    </caption>
+	
+	<listbox id="themelist" width="100%" height="100%" mold="paging" rows="4">
+	  <!--<attribute name="itemRenderer" >themeRenderer</attribute>-->
+      <listhead>
+		<listheader label="" width="3%"/>
+        <listheader label="Pendente" width="15%"/>
+		<listheader label="Estudante" width="15%"/>
+        <listheader label="Tema" width="15%"/>
+		<listheader label="Supervisor" width="8%"/>
+		<listheader label="Data" width="10%"/>
+		<listheader label="" width="34%"/>
+      </listhead>
+		<listitem>
+				<listcell label=""/>
+                <listcell label="Pre-projecto submetido"/>
+                <listcell label="Marcel Saraiva"/>
+                <listcell label="Melhoria da aplicação de Gestão de PFC"/>
+                <listcell label="Engº Turay Melo"/>
+				<listcell label="17-02-2013"/>
+				<listcell>
+					<button label="Confirmar entrega da cópia fisica" />
+					<button label="Confirmar regularização da situação" />
+				</listcell>
+         </listitem>
+		 <listitem>
+				<listcell label=""/>
+                <listcell label="Marco-teorico submetido"/>
+                <listcell label="Marcel Saraiva"/>
+                <listcell label="Melhoria da aplicação de Gestão de PFC"/>
+                <listcell label="Engº Turay Melo"/>
+				<listcell label="30-04-2013"/>
+				<listcell>
+					<button label="Confirmar entrega da cópia fisica" />
+				</listcell>
+         </listitem>
+		 <listitem>
+				<listcell label=""/>
+                <listcell label="Projecto submetido"/>
+                <listcell label="Marcel Saraiva"/>
+                <listcell label="Melhoria da aplicação de Gestão de PFC"/>
+                <listcell label="Engº Turay Melo"/>
+				<listcell label="12-07-2013"/>
+				<listcell>
+					<button label="Confirmar entrega da cópia fisica" />
+				</listcell>
+         </listitem>
+    </listbox>
+</window>

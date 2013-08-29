@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<window>
+	<a href="/zul/tests.zul">Listar</a>
+ 	<zscript src="test.zs"/>
+		<grid id="newContent" >
+		<rows>
+		  	<row> Codigo: <textbox id="codigoTxt" cols="72"/> </row>
+			<row> Designacao: <textbox id="designacaoTxt" cols="72"/> </row>
+			<row><button id="saveBtn" label="Gravar" sclass="button" onClick="save()"/></row>
+		</rows>
+		</grid>
+</window>

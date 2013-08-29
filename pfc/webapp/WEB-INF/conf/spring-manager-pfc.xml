@@ -22,7 +22,7 @@
 	</bean>
 																																																																																 
   	<bean id="ldapContextSource" class="org.springframework.ldap.core.support.LdapContextSource">
-		<property name="url" value="ldap://192.168.1.101:389" />
+		<property name="url" value="ldap://192.168.1.102:389" />
 		<property name="base" value="dc=isutc,dc=transcom,dc=co,dc=mz" />
 		<property name="anonymousReadOnly" value="true"/>
 	</bean>
@@ -31,43 +31,121 @@
 		<constructor-arg ref="ldapContextSource" /> 
 	</bean>
 	
+	<!-- Beans hibernate -->
+	
+	<bean id="cursoDao" class="novo.isutc.pfc.dao.CursoDaoImpl" >
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="cursoManager" class="novo.isutc.pfc.manager.CursoManagerImpl">
+		<property name="cursoDao" ref="cursoDao"/>
+	</bean>
+	
+	<bean id="estudanteDao" class="novo.isutc.pfc.dao.EstudanteDaoImpl" >
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="estudanteManager" class="novo.isutc.pfc.manager.EstudanteManagerImpl">
+		<property name="estudanteDao" ref="estudanteDao"/>
+	</bean>
+	
+	<bean id="pessoaDao" class="novo.isutc.pfc.dao.PessoaDaoImpl" >
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="pessoaManager" class="novo.isutc.pfc.manager.PessoaManagerImpl">
+		<property name="pessoaDao" ref="pessoaDao"/>
+	</bean>
+	
+	<bean id="pfcDao" class="novo.isutc.pfc.dao.PfcDaoImpl" >
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="pfcManager" class="novo.isutc.pfc.manager.PfcManagerImpl">
+		<property name="pfcDao" ref="pfcDao"/>
+	</bean>
+	
+	<bean id="versaoDao" class="novo.isutc.pfc.dao.VersaoDaoImpl" >
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="versaoManager" class="novo.isutc.pfc.manager.VersaoManagerImpl">
+		<property name="versaoDao" ref="versaoDao"/>
+	</bean>
+	
+	<bean id="exemplarDao" class="novo.isutc.pfc.dao.ExemplarDaoImpl" >
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="exemplarManager" class="novo.isutc.pfc.manager.ExemplarManagerImpl">
+		<property name="exemplarDao" ref="exemplarDao"/>
+	</bean>
+	
+	<bean id="docenteDao" class="novo.isutc.pfc.dao.DocenteDaoImpl" >
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="docenteManager" class="novo.isutc.pfc.manager.DocenteManagerImpl">
+		<property name="docenteDao" ref="docenteDao"/>
+	</bean>
+	
+	<bean id="juriDao" class="novo.isutc.pfc.dao.JuriDaoImpl" >
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="juriManager" class="novo.isutc.pfc.manager.JuriManagerImpl">
+		<property name="juriDao" ref="juriDao"/>
+	</bean>
+	
+	<bean id="pendenteDao" class="novo.isutc.pfc.dao.PendenteDaoImpl" >
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="pendenteManager" class="novo.isutc.pfc.manager.PendenteManagerImpl">
+		<property name="pendenteDao" ref="pendenteDao"/>
+	</bean>
+	
+	<!-- End -->
+	
+	<!-- Beans -->
+	
+	<bean id="documentUtil" class="novo.isutc.pfc.util.DocumentUtil" />
+	
+	<!-- End -->
+	
+	
 	<!-- 2.1 configurar os Managers -->
  	<bean id="userManager" class="isutc.pfc.manager.UserManager" parent="dbSpringManager"/>	
 	<bean id="classManager" class="isutc.pfc.manager.ClassManager" parent="dbSpringManager"/>		
 	<bean id="studantManager" class="isutc.pfc.manager.StudantManager" parent="dbSpringManager"/>		
 	<bean id="temaManager" class="isutc.pfc.manager.TemaManager" parent="dbSpringManager"/>
-	<bean id="pfcManager" class="isutc.pfc.manager.PfcManager" parent="dbSpringManager">
-		<property name="temaManager" ref="temaManager"/>
-	</bean>	
 	
 	<!--3.1 Beans Usado na Seguranca -->
-	<bean id="securityUtil" class="isutc.pfc.security.SecurityUtil" parent="dbSpringManager"/>
+	<bean id="securityUtil" class="isutc.pfc.security.SecurityUtil" parent="dbSpringManager">
+		<property name="studentRole" value="ESTUDANTES"/>
+		<property name="secRole" value="LIMEAA_GESTOR"/>
+		<property name="gpfcRole" value="LIMEAA_CHEFIA"/>
+	</bean>
 	
 	<!-- Configuração de Email -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-  		<property name="host" value="smtp.gmail.com"/>
-		<property name="port" value="587"/>
-		<property name="username" value="stelio.zacarias"/>
-		<property name="password" value="shotokan"/>		
+  		<property name="host" value="webmail.transcom.co.mz"/>
+		<property name="port" value="25"/>
+		<property name="username" value="limeaa.admin"/>
+		<property name="password" value="pare21"/>		
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.smtp.auth">true</prop>
-				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.starttls.enable">false</prop>
 			</props>
 		</property>
-	</bean>
+	</bean> 
 	
-	<!-- Template da mensagem -->
-	<bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
-	  <property name="from" value="stelio.zacarias@isutc.transcom.co.mz"/>
-	  <property name="to" value="stelio.zacarias@isutc.transcom.co.mz"/>
-	  <property name="subject" value="PFC Actualizado"/>
-	  <property name="text" value="Teste de envio de email, não responda, obrigado!"/>
-	</bean>
-	
-	<bean id="emailManager" class="isutc.pfc.manager.RealEmailManager">
+	<bean id="emailManager" class="novo.isutc.pfc.manager.RealEmailManager">
 		<property name="mailSender" ref="mailSender"/>
-		<property name="templateMessage" ref="templateMessage"/>
+		<property name="adminEmail" value="limeaa.admin@isutc.transcom.co.mz"/>
+		<property name="secEmail" value="isupac3.professor@isutc.transcom.co.mz"/>
+		<property name="gpfcEmail" value="isupac3.professor@isutc.transcom.co.mz"/>
 	</bean>
 		
 </beans>

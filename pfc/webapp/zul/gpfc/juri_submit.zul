@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<window>
+	<zscript src="juri_submit.zs"/>
+    <caption>   
+	  <label value="Submeter parecer dos departamentos"/>
+	  <separator/><separator/>
+    </caption>
+	
+	<zscript>
+		_items=exemplarManager.findExemplares(true);
+		ListModel exemplares = new SimpleListModel(_items);
+	</zscript>
+	
+	<listbox id="exemplarlist" width="100%" height="100%" mold="paging" rows="4" onSelect="carregar()">
+	   <attribute name="model" >${exemplares}</attribute>
+      <listhead>
+		<listheader label="" width="4%"/>
+		<listheader label="Estudante" width="28%"/>
+        <listheader label="Tema" width="28%"/>
+		<listheader label="Supervisor" width="20%"/>
+		<listheader label="Data" width="20%"/>
+      </listhead>
+	  <zscript> 
+		import novo.isutc.pfc.bean.Pessoa;
+		import novo.isutc.pfc.bean.Estudante;
+		import novo.isutc.pfc.bean.Pfc;
+		import novo.isutc.pfc.bean.Exemplar;
+		import novo.isutc.pfc.bean.Docente;
+		import novo.isutc.pfc.bean.Juri;
+		import novo.isutc.pfc.bean.Pendente;
+		import novo.isutc.pfc.bean.Versao;
+		 
+		exemplarlist.setItemRenderer
+		( 
+		  new ListitemRenderer() 
+		  {
+			public void render(Listitem listItem, Object data) throws Exception
+			{ 
+		 		 count=0;
+				 final Exemplar e = (Exemplar)data;
+		  		 
+				 listItem.setValue(e);
+			  	 count++;
+			  	 new Listcell(""+count).setParent(listItem);
+				 new Listcell(e.getPfc().getEstudante().getPessoa().getNome()).setParent(listItem);
+				 new Listcell(e.getPfc().getTema()).setParent(listItem);
+			  	 new Listcell(e.getPfc().getSupervisor().getNome()).setParent(listItem);
+				 new Listcell(e.getData().toString()).setParent(listItem);  	          
+			}   
+		  }
+		 );
+		 </zscript>
+    </listbox>
+	<vbox id="juri" visible="false">
+		<label id="estudante"/>
+		<hlayout>
+			Supervisor<textbox id="supervisorNome" cols="36"/>
+		</hlayout>
+		<hlayout>
+			Email do Supervisor<textbox id="supervisorEmail" cols="36"/>
+		</hlayout>
+		<hlayout>
+			Oponente<textbox id="oponenteNome" cols="36" constraint="no empty: Insira o nome"/>
+		</hlayout>
+		<hlayout>
+			Email do Oponente<textbox id="oponenteEmail" cols="36" constraint="no empty: Insira o email"/>
+		</hlayout>
+		<hlayout>
+			Presidente<textbox id="presidenteNome" cols="36" constraint="no empty: Insira o nome"/>
+		</hlayout>
+		<hlayout>
+			Email do Presidente<textbox id="presidenteEmail" cols="36" constraint="no empty: Insira o email"/>
+		</hlayout>
+		<button label="Gravar" onClick="saveJuri()"/>
+	</vbox>
+</window>

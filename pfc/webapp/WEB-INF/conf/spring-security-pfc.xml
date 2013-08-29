@@ -12,12 +12,12 @@
 	<!-- Spring-Security: role-based URL protection " Secure pages "-->
  	<security:http auto-config="true">
  	 <security:intercept-url pattern="/zul/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>  
-	 <security:intercept-url pattern="/zul/core/**" access="ROLE_USER"/>
+	 <!--<security:intercept-url pattern="/zul/core/**" access="ROLE_USER"/>
 	 <security:intercept-url pattern="/zul/base/**" access="ROLE_USER"/>
-	 <security:intercept-url pattern="/zul/admin/**" access="ROLE_SUPERVISOR"/>
+	 <security:intercept-url pattern="/zul/admin/**" access="ROLE_SUPERVISOR"/>-->
  	 <security:intercept-url pattern="/zul/login_error.zul" filters="none"/>	 
   	 <security:form-login login-page="/zul/login.zul" default-target-url="/zul/main.zul" authentication-failure-url="/zul/login_error.zul"/> 
-     <security:logout logout-success-url="/zul/main.zul"/>
+     <security:logout logout-success-url="/zul/index.zul"/>
  	</security:http>
 	
 	 
@@ -59,6 +59,6 @@
         </security:user-service>
        </security:authentication-provider>
 	
-	<security:ldap-server id="ldap" url="ldap://192.168.1.101:389"/>
+	<security:ldap-server id="ldap" url="ldap://192.168.1.102:389"/>
 	    
 </beans>

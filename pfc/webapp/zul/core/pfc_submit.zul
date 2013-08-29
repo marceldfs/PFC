@@ -1,16 +1,23 @@
-<window>
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<window onCreate="inicial()">
 	<zscript src="pfc_submit.zs"/>
-	<label id="successMsg" style="color:red"/>
 	<groupbox width="700px">
-		<caption label="Registo de Projecto Final do Curso"/>
+	<caption id="titulo" label="${tituloMsg}"/>
 	<grid id="newContent" >
 		<rows>
-			<row>Descrição:
-				<textbox id="descriptionBox" maxlength="53" rows="4" width="200px"/>
-					<!--constraint="no empty: Digite a descrição
-						Será automático, do tema, mas editável"-->
+			<row> 
+				Tema:       <textbox id="title" cols="36" constraint="no empty: Insira o título"/>                   
 			</row>
-			<row>Caminho:<button id="fileBox" upload="true,maxsize=-1,native" onUpload="recordTextPath()" label="Carregar"/></row>
+		  	<row> 
+				  Nome do supervisor:    <textbox id="nome" cols="36"/>                                                   
+			</row>
+			<row> 
+				  Email do Supervisor:    <textbox id="email" cols="36"/>                                                   
+			</row>
+		  	<row>
+				  Caminho:<button id="fileBox" upload="true,maxsize=-1,native" onUpload="recordTextPath()" label="Carregar"/>
+			</row>
 			
 			<row spans="2">
 				<hbox>

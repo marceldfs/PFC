@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<window onCreate="load()">
+	<zscript src="/zul/tests.zs"/>	
+    <caption>   
+	  <label value="Lista"/>
+	  <separator/><separator/>
+    </caption>
+	
+	<zscript>
+		_items=cursoManager.findCursos("L");
+		ListModel items = new SimpleListModel(_items);
+	</zscript>
+		
+	<listbox id="pfcList" width="100%" height="100%" mold="paging" rows="4">
+	  <attribute name="model" >${items}</attribute>
+      <listhead>
+		<listheader label="" width="10%"/>
+        <listheader label="Codigo" width="45%"/>
+		<listheader label="Nome" width="45%"/>		  
+      </listhead>
+    </listbox>
+	
+	<!-- Activamos o ListBox para mostrar os PFC's dinamicamente -->
+	 <zscript> 
+		import novo.isutc.pfc.bean.Curso;
+		 
+		pfcList.setItemRenderer
+		( 
+		  new ListitemRenderer() 
+		  {
+			public void render(Listitem listItem, Object data) throws Exception
+			{ 
+		 		 count=0;
+				 final Curso c = (Curso)data;
+				 listItem.setValue(c);
+				 count++;
+				 new Listcell(""+count).setParent(listItem);
+				 new Listcell(c.getCodigoCurso()).setParent(listItem);
+				 new Listcell(c.getDesignacao()).setParent(listItem); 		        
+			}   
+		  }
+		 );
+	 </zscript>
+</window>

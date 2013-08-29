@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<zscript src="parecer.zs"/>
+    <caption>   
+	  <label value="Atribuir juri"/>
+	  <separator/><separator/>
+    </caption>
+	
+	<listbox id="themelist" width="100%" height="100%" mold="paging" rows="4">
+	  <!--<attribute name="itemRenderer" >themeRenderer</attribute>-->
+      <listhead>
+		<listheader label="" width="3%"/>
+		<listheader label="Estudante" width="20%"/>
+        <listheader label="Tema" width="30%"/>
+		<listheader label="Supervisor" width="13%"/>
+		<listheader label="" width="34%"/>
+      </listhead>
+		<listitem>
+				<listcell label=""/>
+                <listcell label="Yuri Wingester"/>
+                <listcell label="Desenvolvimento de um modulo para gestão de contas "/>
+                <listcell label="Engº Micas Rafael"/>
+				<listcell>
+					<button label="Atribuir juri" />
+				</listcell>
+         </listitem>
+		<listitem>
+				<listcell label=""/>
+                <listcell label="Marcel Saraiva"/>
+                <listcell label="Melhoria da aplicação de Gestão de PFC"/>
+                <listcell label="Engº Turay Melo"/>
+				<listcell>
+					<button label="Atribuir juri" />
+				</listcell>
+         </listitem>		
+    </listbox> 
+	<label value="Yuri Wingester - Desenvolvimento de um modulo para gestão de contas"/>
+	  <separator/><separator/>
+	Supervisor<textbox id="supervisor" cols="36" value="Engº Micas Rafael" disabled="true"/>
+	Email do Supervisor<textbox id="supervisorEmail" cols="36" value="micas.rafael@isutc.transcom.co.mz" disabled="true"/>
+	<separator/><separator/>
+	Oponente<textbox id="Oponente" cols="36" value=""/>
+	Email do Oponente<textbox id="OponenteE" cols="36" value=""/>
+	<separator/><separator/>
+	Presidente<textbox id="Presidente" cols="36" value=""/>
+	Email do Presidente<textbox id="PresidenteE" cols="36" value="" />
+	<separator/><separator/>
+	<button label="Gravar" />
+</window>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<window>
+	<zscript src="pendentes.zs"/>
+    <caption>   
+	  <label value="Pendentes da Secretária"/>
+	  <separator/><separator/>
+    </caption>
+	
+	<zscript>
+		_items=pendenteManager.findAll();
+		ListModel pendentes = new SimpleListModel(_items);
+	</zscript>
+	
+	<listbox id="pendentelist" width="100%" height="100%" mold="paging" rows="4">
+	   <attribute name="model" >${pendentes}</attribute>
+      <listhead>
+		<listheader label="" width="3%"/>
+        <listheader label="Pendente" width="15%"/>
+		<listheader label="Estudante" width="15%"/>
+        <listheader label="Tema" width="15%"/>
+		<listheader label="Supervisor" width="10%"/>
+		<listheader label="Data" width="10%"/>
+		<listheader label="" width="16%"/>
+		<listheader label="" width="16%"/>
+      </listhead>
+	  <zscript> 
+		import novo.isutc.pfc.bean.Pessoa;
+		import novo.isutc.pfc.bean.Estudante;
+		import novo.isutc.pfc.bean.Pfc;
+		import novo.isutc.pfc.bean.Exemplar;
+		import novo.isutc.pfc.bean.Docente;
+		import novo.isutc.pfc.bean.Juri;
+		import novo.isutc.pfc.bean.Pendente;
+		import novo.isutc.pfc.bean.Versao;
+		 
+		pendentelist.setItemRenderer
+		( 
+		  new ListitemRenderer() 
+		  {
+			public void render(Listitem listItem, Object data) throws Exception
+			{ 
+		 		 count=0;
+				 final Pendente p = (Pendente)data;
+		  		 if(!p.isResolvido())
+			  	 {
+					 listItem.setValue(p);
+			  		 count++;
+			  		 new Listcell(""+count).setParent(listItem);
+					 new Listcell(p.getExemplar().getVersao().getNome()+" submetido").setParent(listItem);
+					 new Listcell(p.getExemplar().getPfc().getEstudante().getPessoa().getNome()).setParent(listItem);
+					 new Listcell(p.getExemplar().getPfc().getTema()).setParent(listItem);
+			  		 new Listcell(p.getExemplar().getPfc().getSupervisor().getNome()).setParent(listItem);
+					 new Listcell(p.getExemplar().getData().toString()).setParent(listItem);
+			  
+			         l1 = new Listcell();
+			  		 l1.setParent(listItem);
+		  			 if(!p.isCopia())
+		  			 {
+			  		 	b1 = new Button("Confirmar entrega da copia fisica");
+			  		 	b1.setParent(l1);
+					 	b1.addEventListener
+	        		 	(
+	          				"onClick", 
+	           				new EventListener()
+	           				{
+			  					onEvent(Event ev)
+			  					{
+			  						Pendente pendente = ev.target.getParent().getParent().value;
+			  						pendente.setCopia(true);
+			  						pendenteManager.savePendente(pendente);
+			  						ev.target.visible=false;
+			  					}
+			  				}
+			  		 	);
+		  			 }
+			  
+			  		 l2 = new Listcell();
+			  		 l2.setParent(listItem);
+			  		 
+			  		 if(p.getExemplar().getVersao().getNumeroversao()==1)
+			  		 {
+		  				if(!p.isRegularizada())
+		  				{
+		  					b2 = new Button("Confirmar situacao do estudante regularizada");
+					 		b2.setParent(l2);
+			  				b2.addEventListener
+	        		 		(
+	          					"onClick", 
+	           					new EventListener()
+	           					{
+			  						onEvent(Event ev)
+			  						{
+			  							Pendente pendente = ev.target.getParent().getParent().value;
+			  							pendente.setRegularizada(true);
+			  							pendenteManager.savePendente(pendente);
+			  							ev.target.visible=false;
+			  						}
+			  					}
+			  		 		);
+		  				}	
+			  		 }
+		  		  }
+		  		  else
+		  		  {
+		  		  	pendenteManager.deletePendente(p.getNumero());
+		  			exemplar = p.getExemplar();
+		  			versao = exemplar.getVersao();
+		  			emailSubject = versao.getNome()+" submetido";
+		  			
+		  			if(versao.getNumeroversao()==2)
+		  			{
+						emailBody = "Caro membro do GPFC o estudante "+exemplar.getPfc().getEstudante().getPessoa().getNome()+" submeteu o marco-teorico do seu projecto final de curso com tema: "+exemplar.getPfc().getTema()+". Por favor submeta o parecer do DPG.";
+		  				emailManager.notifyGpfc(emailSubject, emailBody);
+		  			}
+		  			if(versao.getNumeroversao()==3)
+		  			{
+		  				emailBody = "Caro membro do GPFC o estudante "+exemplar.getPfc().getEstudante().getPessoa().getNome()+" submeteu o projecto final do seu projecto final de curso com tema: "+exemplar.getPfc().getTema()+". Por favor atribua os restantes membros do juri.";
+		  				emailManager.notifyGpfc(emailSubject, emailBody);
+		  			}
+		  		  }			          
+				}   
+			  }
+			 );
+		 </zscript>
+    </listbox>
+</window>
